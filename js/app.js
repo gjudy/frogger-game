@@ -69,12 +69,12 @@ class Player {
         if (playing === true) {
             // Detect collisions
             for (const enemy of allEnemies) {
-                if ((enemy.spriteUpperBound > player.spriteUpperBound)
-                    && (enemy.spriteLowerBound < player.spriteLowerBound)
-                    && (enemy.spriteRightBound > player.spriteLeftBound)
-                    && (enemy.spriteLeftBound < player.spriteRightBound)) {
-                        player.x = player.xDefault;
-                        player.y = player.yDefault;
+                if ((enemy.spriteUpperBound > this.spriteUpperBound)
+                    && (enemy.spriteLowerBound < this.spriteLowerBound)
+                    && (enemy.spriteRightBound > this.spriteLeftBound)
+                    && (enemy.spriteLeftBound < this.spriteRightBound)) {
+                        this.x = this.xDefault;
+                        this.y = this.yDefault;
                 }
             }
         }
