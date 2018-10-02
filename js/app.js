@@ -31,6 +31,11 @@ class Enemy {
         }
     }
 
+    // Change speeds with every replay
+    updateSpeed(i) {
+        this.speed = Math.random() * i + 100;
+    }
+
     // Draw the enemy on the screen
     render() {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -109,10 +114,10 @@ class Player {
 
 // Instantiate objects
 const bug1 = new Enemy(202, 312, 150);
-const bug2 = new Enemy(0, 229, 80);
-const bug3 = new Enemy(303, 229, 80);
-const bug4 = new Enemy(202, 146, Math.random() * 300 + 80);
-const bug5 = new Enemy(0, 63, Math.random() * 500 + 80);
+const bug2 = new Enemy(0, 229, 100);
+const bug3 = new Enemy(303, 229, 100);
+const bug4 = new Enemy(202, 146, Math.random() * 300 + 100);
+const bug5 = new Enemy(0, 63, Math.random() * 500 + 100);
 const allEnemies = [bug1, bug2, bug3, bug4, bug5];
 
 const player = new Player();
@@ -145,6 +150,7 @@ document.getElementsByClassName('replay')[0].addEventListener('click', function(
     player.x = player.xDefault;
     player.y = player.yDefault;
 
-    bug4.speed = Math.random() * 300 + 80;
-    bug5.speed = Math.random() * 500 + 80;
+    for (let i = 0; i < 3; i++) {
+        allEnemies[i].updateSpeed(200 * i + 100);
+    }
 });
