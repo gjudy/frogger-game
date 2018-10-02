@@ -113,12 +113,13 @@ class Player {
 }
 
 // Instantiate objects
-const bug1 = new Enemy(202, 312, 150);
-const bug2 = new Enemy(0, 229, 100);
-const bug3 = new Enemy(303, 229, 100);
-const bug4 = new Enemy(202, 146, Math.random() * 300 + 100);
-const bug5 = new Enemy(0, 63, Math.random() * 500 + 100);
-const allEnemies = [bug1, bug2, bug3, bug4, bug5];
+const allEnemies = [
+    new Enemy(202, 312, 150),
+    new Enemy(202, 146, Math.random() * 300 + 100),
+    new Enemy(0, 63, Math.random() * 500 + 100),
+    new Enemy(0, 229, 100),
+    new Enemy(303, 229, 100)
+];
 
 const player = new Player();
 
