@@ -1,10 +1,20 @@
 "use strict";
 
-// Initialize
+/**
+ * Initialize
+ */
 let playing = true;
 
-// Enemies our player must avoid
+/**
+ * Enemies our player must avoid
+ */
 class Enemy {
+    /**
+     * Set starting values
+     * @param {number} x - the x value
+     * @param {number} y - the y value
+     * @param {number} speed - the enemy speed
+     */
     constructor(x, y, speed) {
         this.sprite = 'images/enemy-bug.png';
 
@@ -18,8 +28,10 @@ class Enemy {
         this.spriteLowerBound = this.y + 143;
     }
 
-    // Update the enemy's position
-    // Parameter: dt, a time delta between ticks
+    /**
+     * Update the enemy's position
+     * @param {number} dt - a time delta between ticks, defined in js/engine.js
+     */
     update(dt) {
         switch (true) {
             case (this.x > 505):
@@ -31,19 +43,29 @@ class Enemy {
         }
     }
 
-    // Change speeds with every replay
+    /**
+     * Change speeds with every replay
+     * @param {i} - a speed multiplier
+     */
     updateSpeed(i) {
         this.speed = Math.random() * i + 100;
     }
 
-    // Draw the enemy on the screen
+    /**
+     * Draw the enemy on the screen
+     */
     render() {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
 }
 
-// The playable character for this game
+/**
+ * The playable character for the game
+ */
 class Player {
+    /**
+     * Set starting values
+     */
     constructor() {
         this.sprite = 'images/char-boy.png';
 
@@ -66,7 +88,10 @@ class Player {
         this.spriteLowerBound = this.y + 139;
     }
 
-    // Update the playable character's position
+    /**
+     * Update the playable character's position
+     * @param {number} dt - a time delta between ticks, defined in {@link js/engine.js}
+     */
     update(dt) {
         this.spriteLeftBound = this.x + 18;
         this.spriteRightBound = this.x + 84;
@@ -74,7 +99,7 @@ class Player {
         this.spriteLowerBound = this.y + 139;
 
         if (playing === true) {
-            // Detect collisions
+            // Send player back to the beginning if collisions are detected
             for (const enemy of allEnemies) {
                 if ((enemy.spriteUpperBound > this.spriteUpperBound)
                     && (enemy.spriteLowerBound < this.spriteLowerBound)
@@ -86,6 +111,7 @@ class Player {
             }
         }
 
+        // Trigger modal with win message when player reaches the top
         if (this.y === 72 && playing === true) {
             modal.classList.toggle('modal--hide');
 
@@ -93,12 +119,17 @@ class Player {
         }
     }
 
-    // Draw the player on the screen
+    /**
+     * Draw the player on the screen
+     */
     render() {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
 
-    // Move the chracter according to keypress
+    /**
+     * Move the chracter according to keypress
+     * @param {string} - the direction to move to, passed from event listener
+     */
     handleInput(keypress) {
         if (keypress === 'left' && this.x - 101 >= 0) {
             this.x -= 101;
@@ -112,7 +143,9 @@ class Player {
     }
 }
 
-// Instantiate objects
+/**
+ * Instantiate enemies
+ */
 const allEnemies = [
     new Enemy(202, 312, 150),
     new Enemy(202, 146, Math.random() * 300 + 100),
@@ -121,10 +154,21 @@ const allEnemies = [
     new Enemy(303, 229, 100)
 ];
 
+/**
+ * Instantiate player
+ */
 const player = new Player();
 
-// Listen for key presses and sends the keys to the
-// Player.handleInput() method
+/**
+ * @namespace document
+ */
+
+/**
+ * Listen for key presses and send the keys to the Player.handleInput() method
+ * @typedef {object} - KeyboardEvent
+ * @param {KeyboardEvent} e - the KeyboardEvent (only interested in keyCode here)
+ * @event document#keyup
+ */
 document.addEventListener('keyup', function(e) {
     const allowedKeys = {
         37: 'left',
@@ -140,9 +184,19 @@ document.addEventListener('keyup', function(e) {
     player.handleInput(allowedKeys[e.keyCode]);
 });
 
-// Listen for click on the replay button
+/**
+ * @constant
+ * @type {object}
+ * @desc the .modal class element
+ */
 const modal = document.getElementsByClassName('modal')[0];
 
+/**
+ * Listen for click on the replay button and reset the game
+ * @typedef {object} - MouseEvent
+ * @param {MouseEvent} e - MouseEvent on .replay button
+ * @event document#mouseup
+ */
 document.getElementsByClassName('replay')[0].addEventListener('click', function(e) {
     modal.classList.toggle('modal--hide');
 
@@ -151,6 +205,7 @@ document.getElementsByClassName('replay')[0].addEventListener('click', function(
     player.x = player.xDefault;
     player.y = player.yDefault;
 
+    // Randomize enemy speeds (all except the two on the same row)
     for (let i = 0; i < 3; i++) {
         allEnemies[i].updateSpeed(200 * i + 100);
     }
