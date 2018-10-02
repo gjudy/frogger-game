@@ -1,3 +1,5 @@
+"use strict";
+
 // Initialize
 let playing = true;
 
@@ -131,34 +133,6 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
-
-// Create modal to notify player when the game is won
-function createModalWin() {
-    const modal = document.createElement('div');
-    modal.className = 'modal modal--hide';
-
-
-    const modalBubble = document.createElement('div');
-    modalBubble.className = 'modal__bubble';
-    modal.appendChild(modalBubble);
-
-    const modalMessage = document.createElement('p');
-    modalMessage.className = 'modal__message';
-    modalBubble.appendChild(modalMessage);
-    
-    const newParagraph = document.createElement('p');
-    newParagraph.textContent = 'You did it!';
-    modalMessage.appendChild(newParagraph);
-
-    const newButton = document.createElement('button');
-    newButton.className = 'replay';
-    newButton.textContent = 'Replay?';
-    modalMessage.appendChild(newButton);
-
-    document.body.appendChild(modal);
-}
-
-createModalWin();
 
 // Listen for click on the replay button
 const modal = document.getElementsByClassName('modal')[0];
