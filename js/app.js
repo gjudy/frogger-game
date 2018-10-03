@@ -45,7 +45,7 @@ class Enemy {
 
     /**
      * Change speeds with every replay
-     * @param {i} - a speed multiplier
+     * @param {number} i - a speed multiplier
      */
     updateSpeed(i) {
         this.speed = Math.random() * i + 100;
@@ -90,7 +90,7 @@ class Player {
 
     /**
      * Update the playable character's position
-     * @param {number} dt - a time delta between ticks, defined in {@link js/engine.js}
+     * @param {number} dt - a time delta between ticks, defined in @link js/engine.js
      */
     update(dt) {
         this.spriteLeftBound = this.x + 18;
